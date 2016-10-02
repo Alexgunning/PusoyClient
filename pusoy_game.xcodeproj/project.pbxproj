@@ -8,19 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		B406D89A1DA004E2003B0F58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B406D8991DA004E2003B0F58 /* AppDelegate.swift */; };
-		B406D89C1DA004E2003B0F58 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B406D89B1DA004E2003B0F58 /* GameScene.sks */; };
 		B406D89E1DA004E2003B0F58 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B406D89D1DA004E2003B0F58 /* Actions.sks */; };
 		B406D8A01DA004E2003B0F58 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B406D89F1DA004E2003B0F58 /* GameScene.swift */; };
 		B406D8A21DA004E2003B0F58 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B406D8A11DA004E2003B0F58 /* GameViewController.swift */; };
 		B406D8A51DA004E2003B0F58 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B406D8A31DA004E2003B0F58 /* Main.storyboard */; };
 		B406D8A71DA004E2003B0F58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B406D8A61DA004E2003B0F58 /* Assets.xcassets */; };
 		B406D8AA1DA004E2003B0F58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B406D8A81DA004E2003B0F58 /* LaunchScreen.storyboard */; };
+		B406D8DA1DA020A3003B0F58 /* cards100px in Resources */ = {isa = PBXBuildFile; fileRef = B406D8D91DA020A3003B0F58 /* cards100px */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B406D8961DA004E2003B0F58 /* pusoy_game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pusoy_game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B406D8991DA004E2003B0F58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B406D89B1DA004E2003B0F58 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		B406D89D1DA004E2003B0F58 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		B406D89F1DA004E2003B0F58 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		B406D8A11DA004E2003B0F58 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -28,6 +27,7 @@
 		B406D8A61DA004E2003B0F58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B406D8A91DA004E2003B0F58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B406D8AB1DA004E2003B0F58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B406D8D91DA020A3003B0F58 /* cards100px */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cards100px; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +60,8 @@
 		B406D8981DA004E2003B0F58 /* pusoy_game */ = {
 			isa = PBXGroup;
 			children = (
+				B406D8D91DA020A3003B0F58 /* cards100px */,
 				B406D8991DA004E2003B0F58 /* AppDelegate.swift */,
-				B406D89B1DA004E2003B0F58 /* GameScene.sks */,
 				B406D89D1DA004E2003B0F58 /* Actions.sks */,
 				B406D89F1DA004E2003B0F58 /* GameScene.swift */,
 				B406D8A11DA004E2003B0F58 /* GameViewController.swift */,
@@ -105,6 +105,7 @@
 				TargetAttributes = {
 					B406D8951DA004E2003B0F58 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 62RDRJY8TB;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -133,9 +134,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B406D8A51DA004E2003B0F58 /* Main.storyboard in Resources */,
-				B406D89C1DA004E2003B0F58 /* GameScene.sks in Resources */,
 				B406D8A71DA004E2003B0F58 /* Assets.xcassets in Resources */,
 				B406D8AA1DA004E2003B0F58 /* LaunchScreen.storyboard in Resources */,
+				B406D8DA1DA020A3003B0F58 /* cards100px in Resources */,
 				B406D89E1DA004E2003B0F58 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,6 +271,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 62RDRJY8TB;
 				INFOPLIST_FILE = pusoy_game/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "alex.pusoy-game";
@@ -282,6 +285,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 62RDRJY8TB;
 				INFOPLIST_FILE = pusoy_game/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "alex.pusoy-game";
@@ -309,6 +314,7 @@
 				B406D8B01DA004E2003B0F58 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
