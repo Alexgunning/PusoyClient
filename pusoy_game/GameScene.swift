@@ -7,7 +7,8 @@
 //
 
 import SpriteKit
-
+import Alamofire
+import SwiftyJSON
 
 class cardSprite
 {
@@ -16,21 +17,21 @@ class cardSprite
     init(sprite:SKSpriteNode)
     {
         self.sprite = sprite
-        self.cardState = .Off
+        self.cardState = .off
     }
 }
 
 enum State{
-    case On
-    case Off
+    case on
+    case off
     
     mutating func toggle()
     {
         switch self {
-        case .On:
-            self = .Off
-        case .Off:
-            self = .On
+        case .on:
+            self = .off
+        case .off:
+            self = .on
         }
     }
     
@@ -41,6 +42,11 @@ let handPlayedWidth:CGFloat = 0.4
 let widthDiff:CGFloat = 0.055
 let startingHeight:CGFloat = 0.1
 let pressedHeight:CGFloat =  0.2
+
+
+let ipAddress = "192.168.0.109:5000"
+
+
 
 class GameScene: SKScene {
     
@@ -56,6 +62,11 @@ class GameScene: SKScene {
     
     var playButtonLabel = SKLabelNode()
     var passButtonLabel = SKLabelNode()
+    
+    let playerID = arc4random_uniform(1000)
+    var gameID : String?
+    
+    var hand = [Card]()
     
     override func didMove(to view: SKView)
     {
@@ -98,7 +109,7 @@ class GameScene: SKScene {
 
         for i in 0..<13
         {
-            let numStr = convertToString(i: i)
+            let numStr = convertToString(i)
             let card = cardSprite(sprite: SKSpriteNode(imageNamed: "cards100px/\(numStr)S.png"))
             card.sprite?.zPosition = CGFloat(i)
             card.sprite?.name = "\(i)"
@@ -106,10 +117,56 @@ class GameScene: SKScene {
             addChild(card.sprite!)
         }
         updateUI()
+        getNetworkCards()
         
     }
     
-    func convertToString(i:Int)->String
+    func getNetworkCards()
+    {
+        Alamofire.request("http://\(ipAddress)/joinRandomGame/\(playerID)")
+            .responseJSON {  response in
+                let responseRequest = response.request
+                let responseResponse = response.response
+                let responseResult = response.result
+                //print("Response Request: \(responseRequest)")  // original URL request
+                //print("Response Response: \(responseResponse)") // URL response
+                print("Response Result: \(responseResult)")     // server data
+                // result of response serialization
+                
+                if let jsonObject = responseResult.value{
+                    
+                    let json = JSON(jsonObject)
+                    print(json)
+                    
+                    if let gameIDNum = json["game"].string
+                    {
+                        self.gameID = gameIDNum
+                    }
+                    if let cardArray = json["hand"].array //.array.map { $0.string! }
+                    {
+                        var intArray = cardArray.map({$0.intValue})
+                        intArray = intArray.sorted()
+                        
+                        //self.hand = intArray.map({Card(rank52: $0)})
+                        
+                    }
+                    if let playerNum = json["playerNum"].int
+                    {
+                        //self.playerNumber = playerNum
+                        //self.playerNumLabel.text = "player number: \(playerNum)"
+                    }
+                    //Stop timer that reapeats the Get Network Cards
+                    //self.timeGetNetworkCards.invalidate()
+                    //Start check game status fire
+                    //self.timerCheckGameStatus.fire()
+                    //self.cardsFromNetworkReceived = true
+                    //self.handPassed = false
+                    //self.updateGUI()
+                }
+        }
+    }
+    
+    func convertToString(_ i:Int)->String
     {
         print(i)
         var returnVal = "ERROR"
@@ -149,7 +206,7 @@ class GameScene: SKScene {
                     
                     uiHand[cardNum].cardState.toggle()
                     var posY:CGFloat = 0.1
-                    if uiHand[cardNum].cardState == .On
+                    if uiHand[cardNum].cardState == .on
                     {
                         posY = 0.2
                     }
@@ -166,7 +223,7 @@ class GameScene: SKScene {
                     print("play button")
                     for (i,card) in uiHand.enumerated()
                     {
-                        if card.cardState == .On
+                        if card.cardState == .on
                         {
                             uiHandsPlayed.append(card.sprite!)
                             //addChild(card.sprite!)
@@ -214,7 +271,11 @@ class GameScene: SKScene {
         for (i,cards) in uiHand.enumerated()
         {
             let widthPos = startingWidth+(widthDiff*CGFloat(i))
-            let heightPos  = cards.cardState == .Off ? startingHeight : pressedHeight
+            var heightPos = startingHeight
+            if cards.cardState == .on
+            {
+                heightPos = pressedHeight
+            }
             cards.sprite?.position = CGPoint(x: size.width * widthPos, y: size.height * heightPos)
             cards.sprite?.name = "\(i)"
         }

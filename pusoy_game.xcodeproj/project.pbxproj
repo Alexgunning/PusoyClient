@@ -15,9 +15,16 @@
 		B406D8A71DA004E2003B0F58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B406D8A61DA004E2003B0F58 /* Assets.xcassets */; };
 		B406D8AA1DA004E2003B0F58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B406D8A81DA004E2003B0F58 /* LaunchScreen.storyboard */; };
 		B406D8DA1DA020A3003B0F58 /* cards100px in Resources */ = {isa = PBXBuildFile; fileRef = B406D8D91DA020A3003B0F58 /* cards100px */; };
+		B47F07751DA14FB6002264FE /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47F07741DA14FB6002264FE /* Card.swift */; };
+		B47F07781DA150BD002264FE /* Cards.txt in Resources */ = {isa = PBXBuildFile; fileRef = B47F07761DA150BD002264FE /* Cards.txt */; };
+		B47F07791DA150BD002264FE /* CardTable.txt in Resources */ = {isa = PBXBuildFile; fileRef = B47F07771DA150BD002264FE /* CardTable.txt */; };
+		B47F077B1DA150FD002264FE /* HandEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47F077A1DA150FD002264FE /* HandEvaluator.swift */; };
+		B65C820F844E1121A4507ECA /* Pods_pusoy_game.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 216BB628D37A1EA118E0935D /* Pods_pusoy_game.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		216BB628D37A1EA118E0935D /* Pods_pusoy_game.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pusoy_game.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D7DBD86EDDE1DA2EA45BB33 /* Pods-pusoy_game.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pusoy_game.release.xcconfig"; path = "Pods/Target Support Files/Pods-pusoy_game/Pods-pusoy_game.release.xcconfig"; sourceTree = "<group>"; };
 		B406D8961DA004E2003B0F58 /* pusoy_game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pusoy_game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B406D8991DA004E2003B0F58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B406D89D1DA004E2003B0F58 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -28,6 +35,11 @@
 		B406D8A91DA004E2003B0F58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B406D8AB1DA004E2003B0F58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B406D8D91DA020A3003B0F58 /* cards100px */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cards100px; sourceTree = "<group>"; };
+		B47F07741DA14FB6002264FE /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		B47F07761DA150BD002264FE /* Cards.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cards.txt; sourceTree = "<group>"; };
+		B47F07771DA150BD002264FE /* CardTable.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CardTable.txt; sourceTree = "<group>"; };
+		B47F077A1DA150FD002264FE /* HandEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandEvaluator.swift; sourceTree = "<group>"; };
+		C7F5CBB30932E5ADAAFD6DFC /* Pods-pusoy_game.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pusoy_game.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pusoy_game/Pods-pusoy_game.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +47,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B65C820F844E1121A4507ECA /* Pods_pusoy_game.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		210232E42D22D6ADEDA35EA3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C7F5CBB30932E5ADAAFD6DFC /* Pods-pusoy_game.debug.xcconfig */,
+				7D7DBD86EDDE1DA2EA45BB33 /* Pods-pusoy_game.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		933CF53FCC7161EF73A0AF1B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				216BB628D37A1EA118E0935D /* Pods_pusoy_game.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B406D88D1DA004E2003B0F58 = {
 			isa = PBXGroup;
 			children = (
 				B406D8981DA004E2003B0F58 /* pusoy_game */,
 				B406D8971DA004E2003B0F58 /* Products */,
+				210232E42D22D6ADEDA35EA3 /* Pods */,
+				933CF53FCC7161EF73A0AF1B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +92,10 @@
 		B406D8981DA004E2003B0F58 /* pusoy_game */ = {
 			isa = PBXGroup;
 			children = (
+				B47F077A1DA150FD002264FE /* HandEvaluator.swift */,
+				B47F07761DA150BD002264FE /* Cards.txt */,
+				B47F07771DA150BD002264FE /* CardTable.txt */,
+				B47F07741DA14FB6002264FE /* Card.swift */,
 				B406D8D91DA020A3003B0F58 /* cards100px */,
 				B406D8991DA004E2003B0F58 /* AppDelegate.swift */,
 				B406D89D1DA004E2003B0F58 /* Actions.sks */,
@@ -80,9 +116,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B406D8AE1DA004E2003B0F58 /* Build configuration list for PBXNativeTarget "pusoy_game" */;
 			buildPhases = (
+				CD7D4241BEEC1B68BD2B7C7A /* [CP] Check Pods Manifest.lock */,
 				B406D8921DA004E2003B0F58 /* Sources */,
 				B406D8931DA004E2003B0F58 /* Frameworks */,
 				B406D8941DA004E2003B0F58 /* Resources */,
+				700A7261A7B2BEFDAE399F6D /* [CP] Embed Pods Frameworks */,
+				9A9D9FCA76B59B2F171F8E7E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -106,6 +145,7 @@
 					B406D8951DA004E2003B0F58 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 62RDRJY8TB;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -135,6 +175,8 @@
 			files = (
 				B406D8A51DA004E2003B0F58 /* Main.storyboard in Resources */,
 				B406D8A71DA004E2003B0F58 /* Assets.xcassets in Resources */,
+				B47F07781DA150BD002264FE /* Cards.txt in Resources */,
+				B47F07791DA150BD002264FE /* CardTable.txt in Resources */,
 				B406D8AA1DA004E2003B0F58 /* LaunchScreen.storyboard in Resources */,
 				B406D8DA1DA020A3003B0F58 /* cards100px in Resources */,
 				B406D89E1DA004E2003B0F58 /* Actions.sks in Resources */,
@@ -143,14 +185,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		700A7261A7B2BEFDAE399F6D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-pusoy_game/Pods-pusoy_game-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A9D9FCA76B59B2F171F8E7E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-pusoy_game/Pods-pusoy_game-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CD7D4241BEEC1B68BD2B7C7A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B406D8921DA004E2003B0F58 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				B406D8A01DA004E2003B0F58 /* GameScene.swift in Sources */,
+				B47F077B1DA150FD002264FE /* HandEvaluator.swift in Sources */,
 				B406D8A21DA004E2003B0F58 /* GameViewController.swift in Sources */,
 				B406D89A1DA004E2003B0F58 /* AppDelegate.swift in Sources */,
+				B47F07751DA14FB6002264FE /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +361,7 @@
 		};
 		B406D8AF1DA004E2003B0F58 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7F5CBB30932E5ADAAFD6DFC /* Pods-pusoy_game.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -283,6 +376,7 @@
 		};
 		B406D8B01DA004E2003B0F58 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D7DBD86EDDE1DA2EA45BB33 /* Pods-pusoy_game.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
