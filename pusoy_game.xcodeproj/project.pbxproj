@@ -20,6 +20,7 @@
 		B47F07791DA150BD002264FE /* CardTable.txt in Resources */ = {isa = PBXBuildFile; fileRef = B47F07771DA150BD002264FE /* CardTable.txt */; };
 		B47F077B1DA150FD002264FE /* HandEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47F077A1DA150FD002264FE /* HandEvaluator.swift */; };
 		B4FD45411DAAD769001BEAA0 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD45401DAAD768001BEAA0 /* Player.swift */; };
+		B4FD45431DAADC27001BEAA0 /* HumanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD45421DAADC27001BEAA0 /* HumanPlayer.swift */; };
 		B65C820F844E1121A4507ECA /* Pods_pusoy_game.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 216BB628D37A1EA118E0935D /* Pods_pusoy_game.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		B47F07771DA150BD002264FE /* CardTable.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CardTable.txt; sourceTree = "<group>"; };
 		B47F077A1DA150FD002264FE /* HandEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandEvaluator.swift; sourceTree = "<group>"; };
 		B4FD45401DAAD768001BEAA0 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		B4FD45421DAADC27001BEAA0 /* HumanPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanPlayer.swift; sourceTree = "<group>"; };
 		C7F5CBB30932E5ADAAFD6DFC /* Pods-pusoy_game.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pusoy_game.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pusoy_game/Pods-pusoy_game.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				B4FD45401DAAD768001BEAA0 /* Player.swift */,
+				B4FD45421DAADC27001BEAA0 /* HumanPlayer.swift */,
 				B47F077A1DA150FD002264FE /* HandEvaluator.swift */,
 				B47F07761DA150BD002264FE /* Cards.txt */,
 				B47F07771DA150BD002264FE /* CardTable.txt */,
@@ -245,6 +248,7 @@
 				B47F077B1DA150FD002264FE /* HandEvaluator.swift in Sources */,
 				B406D8A21DA004E2003B0F58 /* GameViewController.swift in Sources */,
 				B406D89A1DA004E2003B0F58 /* AppDelegate.swift in Sources */,
+				B4FD45431DAADC27001BEAA0 /* HumanPlayer.swift in Sources */,
 				B4FD45411DAAD769001BEAA0 /* Player.swift in Sources */,
 				B47F07751DA14FB6002264FE /* Card.swift in Sources */,
 			);

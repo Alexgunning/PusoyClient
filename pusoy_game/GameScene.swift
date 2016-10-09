@@ -70,8 +70,8 @@ class GameScene: SKScene {
     var playerLastPlayedHand = [Card]()
     var handToBeat = [Card]()
     
-    var computerPlayerLeft : Player?
-    var computerPlayerRight : Player?
+    var networkPlayerLeft : Player?
+    var networkPlayerRight : Player?
     
     var computerDict =  [Int:Player]()
     var currentPlayer = -1
@@ -186,10 +186,10 @@ class GameScene: SKScene {
         }
         
         playerNumber = 0
-        self.computerPlayerLeft = ComputerPlayer(playerNum: 2, playerLabel: "Left Player")
-        self.computerDict[2] = self.computerPlayerLeft
-        self.computerPlayerRight = ComputerPlayer(playerNum: 1, playerLabel: "Right Player")
-        self.computerDict[1] = self.computerPlayerRight
+        self.networkPlayerLeft = networkPlayer(playerNum: 2, playerLabel: "Left Player")
+        self.computerDict[2] = self.networkPlayerLeft
+        self.networkPlayerRight = networkPlayer(playerNum: 1, playerLabel: "Right Player")
+        self.computerDict[1] = self.networkPlayerRight
         
         currentPlayer = 2
         curTurn = false
@@ -238,20 +238,21 @@ class GameScene: SKScene {
                         switch playerNum
                         {
                         case 0:
-                            self.computerPlayerLeft = Player(playerNum: 2, playerLabel: "Left Player")
-                            self.computerDict[2] = self.computerPlayerLeft
-                            self.computerPlayerRight = Player(playerNum: 1, playerLabel: "Right Player")
-                            self.computerDict[1] = self.computerPlayerRight
+                            
+                            self.networkPlayerLeft = Player(playerNum: 2, playerLabel: "Left Player")
+                            self.computerDict[2] = self.networkPlayerLeft
+                            self.networkPlayerRight = Player(playerNum: 1, playerLabel: "Right Player")
+                            self.computerDict[1] = self.networkPlayerRight
                         case 1:
-                            self.computerPlayerLeft = Player(playerNum: 0, playerLabel: "Left Player")
-                            self.computerDict[0] = self.computerPlayerLeft
-                            self.computerPlayerRight = Player(playerNum: 2, playerLabel: "Right Player")
-                            self.computerDict[2] = self.computerPlayerRight
+                            self.networkPlayerLeft = Player(playerNum: 0, playerLabel: "Left Player")
+                            self.computerDict[0] = self.networkPlayerLeft
+                            self.networkPlayerRight = Player(playerNum: 2, playerLabel: "Right Player")
+                            self.computerDict[2] = self.networkPlayerRight
                         case 2:
-                            self.computerPlayerLeft = Player(playerNum: 1, playerLabel: "Left Player")
-                            self.computerDict[1] = self.computerPlayerLeft
-                            self.computerPlayerRight = Player(playerNum: 0, playerLabel: "Right Player")
-                            self.computerDict[0] = self.computerPlayerRight
+                            self.networkPlayerLeft = Player(playerNum: 1, playerLabel: "Left Player")
+                            self.computerDict[1] = self.networkPlayerLeft
+                            self.networkPlayerRight = Player(playerNum: 0, playerLabel: "Right Player")
+                            self.computerDict[0] = self.networkPlayerRight
                         default:
                             assert(true)
                         }
@@ -340,10 +341,10 @@ class GameScene: SKScene {
                                             self.handToBeat.removeAll()
                                             self.passEligible = false
                                             self.passCount = 0
-                                            self.computerPlayerLeft?.showPassesdLabel = false
-                                            self.computerPlayerRight?.showPassesdLabel = false
-                                            self.computerPlayerLeft?.m_DirtyHand = true
-                                            self.computerPlayerRight?.m_DirtyHand = true
+                                            self.networkPlayerLeft?.showPassesdLabel = false
+                                            self.networkPlayerRight?.showPassesdLabel = false
+                                            self.networkPlayerLeft?.m_DirtyHand = true
+                                            self.networkPlayerRight?.m_DirtyHand = true
                                         }
                                         else if !self.gameStarted
                                         {
@@ -531,11 +532,11 @@ class GameScene: SKScene {
                         //ALEX FIX last played hand stuff?
                         //self.lastPlayedHand.removeAll()
                         var spritesToRemove = [SKSpriteNode]()
-                        for card in self.computerPlayerLeft!.handPlayed
+                        for card in self.networkPlayerLeft!.handPlayed
                         {
                             spritesToRemove.append(card.sprite)
                         }
-                        for card in self.computerPlayerRight!.handPlayed
+                        for card in self.networkPlayerRight!.handPlayed
                         {
                             spritesToRemove.append(card.sprite)
                         }
@@ -544,12 +545,12 @@ class GameScene: SKScene {
                         self.passEligible = false
                         self.passCount = 0
                         self.handToBeat.removeAll()
-                        self.computerPlayerLeft?.handPlayed.removeAll()
-                        self.computerPlayerRight?.handPlayed.removeAll()
-                        self.computerPlayerLeft?.showPassesdLabel = false
-                        self.computerPlayerRight?.showPassesdLabel = false
-                        self.computerPlayerLeft?.m_DirtyHand = true
-                        self.computerPlayerRight?.m_DirtyHand = true
+                        self.networkPlayerLeft?.handPlayed.removeAll()
+                        self.networkPlayerRight?.handPlayed.removeAll()
+                        self.networkPlayerLeft?.showPassesdLabel = false
+                        self.networkPlayerRight?.showPassesdLabel = false
+                        self.networkPlayerLeft?.m_DirtyHand = true
+                        self.networkPlayerRight?.m_DirtyHand = true
                     }
                     self.timerCheckGameStatus = Timer.scheduledTimer(timeInterval: TIMER_DURATION, target: self, selector: #selector(GameScene.checkGameStatus), userInfo: nil, repeats: true)
                     self.timerCheckGameStatus.fire()
@@ -783,7 +784,7 @@ class GameScene: SKScene {
             }
             playerPassLabel.text = ""
         }
-        if let playerL = computerPlayerLeft, let playerR = computerPlayerRight
+        if let playerL = networkPlayerLeft, let playerR = networkPlayerRight
         {
             if playerL.m_DirtyHand
             {
@@ -828,7 +829,7 @@ class GameScene: SKScene {
             playerLabel.fontColor = UIColor.black
             
         }
-        if computerPlayerRight?.m_PlayerNum == currentPlayer
+        if networkPlayerRight?.m_PlayerNum == currentPlayer
         {
             playerRightLabel.fontColor = UIColor.yellow
         }
@@ -836,7 +837,7 @@ class GameScene: SKScene {
         {
             playerRightLabel.fontColor = UIColor.black
         }
-        if computerPlayerLeft?.m_PlayerNum == currentPlayer
+        if networkPlayerLeft?.m_PlayerNum == currentPlayer
         {
             playerLeftLabel.fontColor = UIColor.yellow
         }
