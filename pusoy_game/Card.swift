@@ -60,6 +60,8 @@ struct Card: Equatable
     
     let sprite : SKSpriteNode
     
+    var state : cardState = .Off
+    
     /**
      suit is the Suit of the card
      ranked in order ♣️♠️♥️♦️
@@ -140,7 +142,9 @@ struct Card: Equatable
         }
         
         
-        self.sprite = SKSpriteNode(imageNamed: "cards100px/\(self.m_SuitStr).png")
+        self.sprite = SKSpriteNode(imageNamed: "cards100px/\(self.m_RankStr)\(self.m_SuitStr).png")
+        self.sprite.name = "\(rank52)"
+    
         
         switch self.m_Suit{
         case .Clubs:
@@ -205,49 +209,24 @@ struct Deck
         }
         return cardArray
     }()
-    /** 
-        Set the hands for each of the players 
-     
-    */
-    /*
-    static func shuffledCards(numCards : Int, numPlayers: Int, players : inout [Player]) -> Int
-    {
-        //ALEX FIX NOT SURE IF USE ANYWAYS
-        var firstPlayer = Int?(-1)
-        var lowCard = HIGHEST_CARD + 1
-        var newNumber = [Int]()
-        for i in 0..<52
-        {
-            newNumber.append(i)
-        }
-        let totalNumCards = numCards*numPlayers
-        var cardsDealt = 0
-        //Continues until we have dealt correct number of cards
-        //
-        while cardsDealt != totalNumCards
-        {
-            let cardNum = Int(arc4random_uniform(UInt32(newNumber.count)))
-            if newNumber[cardNum] < lowCard
-            {
-                lowCard =  newNumber[cardNum]
-                firstPlayer = cardsDealt/numCards
-            }
-            players[cardsDealt/numCards].m_Hand.append(Card(rank52: newNumber[cardNum], player: players[cardsDealt/numCards]))
-            cardsDealt += 1
-            newNumber.remove(at: cardNum)
-        }
-        
-        guard let first = firstPlayer else
-        {
-            return -1
-        }
-        return first
-    }
-}*/
-//TODO: Figure out this enum stuff
-//Raw values can't be a strucute?
 }
+
+enum cardState
+{
+    case On
+    case Off
     
+    mutating func toggle()
+    {
+        switch self {
+        case .On:
+            self = .Off
+        case .Off:
+            self = .On
+        }
+    }
+}
+
 enum Suit : Int
 {
     case Clubs,
