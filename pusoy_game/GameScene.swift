@@ -49,7 +49,7 @@ class GameScene: SKScene {
     
     let playerID = arc4random_uniform(1000)
     var gameID : String?
-    var playerNumber : Int?
+    var playerNumber :  Int?
     
     var timerCheckGameStatus = Timer()
     var timeGetNetworkCards = Timer()
@@ -67,18 +67,32 @@ class GameScene: SKScene {
     
     var handToPlayDirty = false
     
+    var lastPlayedID = 0
+    
     var playerLastPlayedHand = [Card]()
     var handToBeat = [Card]()
     
     var networkPlayerLeft : Player?
     var networkPlayerRight : Player?
     
-    var computerDict =  [Int:Player]()
+    var humanPlayer : HumanPlayer?
+    
+    var playerDict =  [Int:Player]()
     var currentPlayer = -1
+    {
+        willSet {
+            curTurn = newValue == playerNumber
+        }
+    }
     
     var playerPassed = false
-
-    
+/*
+    struct handTransaction
+    {
+        playerID : Int
+        ini
+    }
+ */
     
     override func didMove(to view: SKView)
     {
@@ -187,9 +201,9 @@ class GameScene: SKScene {
         
         playerNumber = 0
         self.networkPlayerLeft = networkPlayer(playerNum: 2, playerLabel: "Left Player")
-        self.computerDict[2] = self.networkPlayerLeft
+        self.playerDict[2] = self.networkPlayerLeft
         self.networkPlayerRight = networkPlayer(playerNum: 1, playerLabel: "Right Player")
-        self.computerDict[1] = self.networkPlayerRight
+        self.playerDict[1] = self.networkPlayerRight
         
         currentPlayer = 2
         curTurn = false
@@ -226,33 +240,37 @@ class GameScene: SKScene {
                         var intArray = cardArray.map({$0.intValue})
                         intArray = intArray.sorted()
                         
-                        self.hand = intArray.map({Card(rank52: $0)})
-                        self.hand = self.hand.sorted(by: HandEvaluator.compareRank52AltLow)
-                        for (i,card) in self.hand.enumerated()
+                        
+                        var hand = intArray.map({Card(rank52: $0)})
+                        hand = hand.sorted(by: HandEvaluator.compareRank52AltLow)
+                        for (i,card) in hand.enumerated()
                         {
                             card.sprite.zPosition = CGFloat(i)
                             self.addChild(card.sprite)
                         }
+                        
                         self.playerNumber = playerNum
                         
+                        self.humanPlayer = HumanPlayer(playerNum: playerNum, playerLabel: "Human Player", hand: hand)
+                        self.playerDict[playerNum] = self.humanPlayer
+                        self.humanPlayer?.m_Hand = hand
                         switch playerNum
                         {
                         case 0:
-                            
                             self.networkPlayerLeft = Player(playerNum: 2, playerLabel: "Left Player")
-                            self.computerDict[2] = self.networkPlayerLeft
+                            self.playerDict[2] = self.networkPlayerLeft
                             self.networkPlayerRight = Player(playerNum: 1, playerLabel: "Right Player")
-                            self.computerDict[1] = self.networkPlayerRight
+                            self.playerDict[1] = self.networkPlayerRight
                         case 1:
                             self.networkPlayerLeft = Player(playerNum: 0, playerLabel: "Left Player")
-                            self.computerDict[0] = self.networkPlayerLeft
+                            self.playerDict[0] = self.networkPlayerLeft
                             self.networkPlayerRight = Player(playerNum: 2, playerLabel: "Right Player")
-                            self.computerDict[2] = self.networkPlayerRight
+                            self.playerDict[2] = self.networkPlayerRight
                         case 2:
                             self.networkPlayerLeft = Player(playerNum: 1, playerLabel: "Left Player")
-                            self.computerDict[1] = self.networkPlayerLeft
+                            self.playerDict[1] = self.networkPlayerLeft
                             self.networkPlayerRight = Player(playerNum: 0, playerLabel: "Right Player")
-                            self.computerDict[0] = self.networkPlayerRight
+                            self.playerDict[0] = self.networkPlayerRight
                         default:
                             assert(true)
                         }
@@ -306,7 +324,7 @@ class GameScene: SKScene {
                                 }
                                 //alex fix should be previous player??
                                // getPrevPlayer()
-                                if var cPlayer = self.computerDict[self.getPrevPlayer(curPlayer: curPlayer)]
+                                if var cPlayer = self.playerDict[self.getPrevPlayer(curPlayer: curPlayer)]
                                 {
                                     var spritesToRemove = [SKSpriteNode]()
                                     for card in cPlayer.handPlayed
@@ -394,7 +412,7 @@ class GameScene: SKScene {
     {
         if let gameIDNumber = gameID
         {
-            Alamofire.request("http://\(ipAddress)/getGameStatus/\(gameIDNumber)/0")
+            Alamofire.request("http://\(ipAddress)/getGameStatus/\(gameIDNumber)/\(lastPlayedID)")
                 .responseJSON { response in
                     let responseRequest = response.request
                     let responseResponse = response.response
@@ -409,10 +427,6 @@ class GameScene: SKScene {
                         let json = JSON(jsonObject)
                         print(json)
                         
-                     /*   if let curPlayer = json["curPlayer"].int, let gameFull = json["gameFull"].int, let lastPlayed = json["lastPlayedHand"].array,
-                            let gameWon = json["gameWon"].int
-                           */
-                      
                         if let playerIDs = json["playerIDs"].array, let cardCounts = json["cardCounts"].array, let turnIDs = json["turnIDs"].array,
                             let returnHands = json["returnHands"].array
                         {
@@ -427,6 +441,13 @@ class GameScene: SKScene {
                                 self.processTurn(playerID: playerID, turnID: turnID, cardCount: cardCount, hand: handToPlay)
                             }
                         }
+                        
+                        if let curPlayer = json["curPlayer"].int
+                        {
+                            self.currentPlayer = curPlayer
+                            //Alex Fix call everytime
+                            self.updateUI()
+                        }
                          
                }
             }
@@ -435,7 +456,34 @@ class GameScene: SKScene {
     
     func processTurn(playerID: Int, turnID: Int, cardCount: Int, hand: [Card])
     {
-        
+        if let player = playerDict[playerID]
+        {
+            lastPlayedID = turnID
+            currentPlayer = getNextPlayer(curPlayer: playerID)
+            player.handPlayed.removeAll()
+            player.m_DirtyHand = true
+            if hand.isEmpty
+            {
+                passCount += 1
+                if passCount == 2
+                {
+                    passEligible = false
+                    handToBeat.removeAll()
+                }
+                else
+                {
+                    passEligible = true
+                }
+                
+            }
+            else
+            {
+                player.handPlayed = hand
+                passEligible = true
+                passCount = 0
+            }
+        }
+        updateUI()
     }
     
     
@@ -463,7 +511,10 @@ class GameScene: SKScene {
                 if let jsonObject = responseResult.value{
                     
                     let json = JSON(jsonObject)
-                    if let cardCount = json["cardCount"].int, let cardArray = json["cards"].array
+                    
+                    self.processTurn(playerID: (self.humanPlayer?.m_PlayerNum)!, turnID: self.lastPlayedID+1, cardCount: handToPlay.count, hand: handToPlay)
+                    
+                   /* if let cardCount = json["cardCount"].int, let cardArray = json["cards"].array
                     {
                         //self.gameID = gameIDNum
                         print(cardCount)
@@ -494,6 +545,7 @@ class GameScene: SKScene {
                     self.timerCheckGameStatus = Timer.scheduledTimer(timeInterval: TIMER_DURATION, target: self, selector: #selector(GameScene.checkGameStatus), userInfo: nil, repeats: true)
                     self.timerCheckGameStatus.fire()
                     self.updateUI()
+ */
                 }
         }
     }
@@ -518,9 +570,11 @@ class GameScene: SKScene {
                 // result of response serialization
                 
                 if let jsonObject = responseResult.value{
-                    
+                    var emptyHand = [Card]()
                     let json = JSON(jsonObject)
-                    print(json)
+                    
+                    self.processTurn(playerID: (self.humanPlayer?.m_PlayerNum)!, turnID: self.lastPlayedID+1, cardCount: 0, hand: emptyHand)
+                 /*   print(json)
                     //ALEX FIX CLEAN UP
                     self.handPassed = true
                     self.curTurn = false
@@ -555,6 +609,7 @@ class GameScene: SKScene {
                     self.timerCheckGameStatus = Timer.scheduledTimer(timeInterval: TIMER_DURATION, target: self, selector: #selector(GameScene.checkGameStatus), userInfo: nil, repeats: true)
                     self.timerCheckGameStatus.fire()
                     self.updateUI()
+                */
                 }
         }
     }
@@ -594,24 +649,24 @@ class GameScene: SKScene {
            
             if let name = touchedNode.name
             {
-                if let cardNum = Int(name)
+                if let cardNum = Int(name), let human = humanPlayer
                     {
                         if curTurn
                         {
                             print(name)
                             let widthPos = startingWidth+(widthDiff*CGFloat(cardNum))
                             //touchedNode.userData?.setValue(Int(1), forKey: "state")
-                            hand = hand.sorted(by: HandEvaluator.compareRank52AltLow)
-                            hand[cardNum].state.toggle()
+                            human.m_Hand = human.m_Hand.sorted(by: HandEvaluator.compareRank52AltLow)
+                            human.m_Hand[cardNum].state.toggle()
                             var posY:CGFloat = 0.1
-                            if hand[cardNum].state == .On
+                            if human.m_Hand[cardNum].state == .On
                             {
                                 posY = pressedHeight
                             }
                             
                             touchedNode.position = CGPoint(x: size.width * widthPos, y: size.height * CGFloat(posY))
                             var handToPlay = [Card]()
-                            for playCards in hand
+                            for playCards in human.m_Hand
                             {
                                 if playCards.state == .On
                                 {
@@ -645,7 +700,7 @@ class GameScene: SKScene {
                         var indexesToRemove = [Int]()
                         var spritesToRemove = [SKSpriteNode]()
                         print("play button")
-                        for (i,card) in hand.enumerated()
+                        for (i,card) in humanPlayer!.m_Hand.enumerated()
                         {
                             if card.state == .On
                             {
@@ -666,7 +721,7 @@ class GameScene: SKScene {
                         
                         for i in indexesToRemove
                         {
-                            hand.remove(at: i)
+                            humanPlayer!.m_Hand.remove(at: i)
                         }
                         
                         //!!!!!!!!
@@ -758,16 +813,19 @@ class GameScene: SKScene {
 
     func updateUI()
     {
-        for (i,cards) in hand.enumerated()
+        if let human = humanPlayer
         {
-            let widthPos = startingWidth+(widthDiff*CGFloat(i))
-            var heightPos = startingHeight
-            if cards.state == .On
+            for (i,cards) in human.m_Hand.enumerated()
             {
-                heightPos = pressedHeight
+                let widthPos = startingWidth+(widthDiff*CGFloat(i))
+                var heightPos = startingHeight
+                if cards.state == .On
+                {
+                    heightPos = pressedHeight
+                }
+                cards.sprite.position = CGPoint(x: size.width * widthPos, y: size.height * heightPos)
+                cards.sprite.name = "\(i)"
             }
-            cards.sprite.position = CGPoint(x: size.width * widthPos, y: size.height * heightPos)
-            cards.sprite.name = "\(i)"
         }
         if playerPassed
         {
